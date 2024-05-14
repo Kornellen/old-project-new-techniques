@@ -1,11 +1,16 @@
 const mysql = require("mysql");
 const colors = require("colors");
 const database = require("../config/database");
+const logger = require("../config/logger");
 
 const $con = mysql.createConnection(database);
 const log = console.log;
 
-$con.connect((err) => (err ? log(err) : log("CONNECTED")));
+$con.connect((err) =>
+  err
+    ? logger.error(`Error at connecting to db: ${err}`)
+    : logger.info("Connected")
+);
 
 const modsController = {};
 
@@ -16,9 +21,10 @@ modsController.loadMods = (req, res) => {
 
   $con.query($sql, [category], (err, result) => {
     if (err) {
-      log(err);
+      logger.error(`Error at db query: ${err}`);
       res.sendStatus(500);
     } else {
+      logger.info("Success");
       res.status(200).send({ result: result });
     }
   });

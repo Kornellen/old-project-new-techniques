@@ -35,15 +35,20 @@ const Mods = () => {
       />
       <div className="datas">
         <table className="mods">
-          {data.map((element, index) => {
-            return (
-              <tr className="mod">
-                <td>
-                  <Link to={element.modLink}>{element.modName}</Link>
-                </td>
-              </tr>
-            );
-          })}
+          <tbody>
+            {data.map((element, index) => {
+              return (
+                <tr className="mod" key={index}>
+                  <td>
+                    {index + 1}.{" "}
+                    <Link to={element.modLink} target="_blank">
+                      {element.modName}
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
     </div>
